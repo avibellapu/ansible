@@ -14,3 +14,8 @@
   command: /bin/true
   notify:
     - reload sysctl.conf
+
+- name: Install td-agent
+  shell: curl -L https://toolbelt.treasuredata.com/sh/install-debian-stretch-td-agent3.sh | sh
+  notify:
+    - reload td-agent

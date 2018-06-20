@@ -1,3 +1,9 @@
 ---
 - name: reload sysctl.conf
   command: /sbin/sysctl -p
+
+- name: reload td-agent
+  systemd: 
+    name: td-agent
+    state: restarted
+    enabled: yes

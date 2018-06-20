@@ -1,0 +1,22 @@
+---
+
+xpack.http.default_connection_timeout: 10s
+xpack.http.default_read_timeout: 20s
+
+node.name: ${HOSTNAME}
+node.master: false
+node.data: true
+node.ingest: false
+
+indices.memory.index_buffer_size: 10%
+discovery.zen.minimum_master_nodes: 2
+
+network.host: _gce:privateIp:0_
+cloud:
+  gce:
+      project_id: My Project
+      zone: ["us-west1-b"]
+      retry: true
+      max_wait: 0s
+      refresh_interval: 0s
+discovery.zen.hosts_provider: gce

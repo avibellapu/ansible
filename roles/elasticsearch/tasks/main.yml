@@ -1,0 +1,48 @@
+---
+
+- name: install prereqs
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+
+- name: install the elasticsearch apt key
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+
+- name: add the ansible repository
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main
+    state: present
+    filename: elastic
+    update_cache: yes
+
+- name: install elasticsearch
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    elasticsearch=6.3.0
+
+- name: add the elasticsearch config
+  template:
+    src: etc/elasticsearch/elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+  notify:
+    - restart elasticsearch
+
+- name: add the elasticsearch jvm config
+  template:
+    src: etc/elasticsearch/jvm.options.j2
+    dest: /etc/elasticsearch/jvm.options
+  notify:
+    - restart elasticsearch
+
+- name: add the elasticsearch defaults file
+  template:
+    src: etc/default/elasticsearch.j2
+    dest: /etc/default/elasticsearch
+  notify:
+    - restart elasticsearch
