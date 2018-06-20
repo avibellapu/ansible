@@ -1,0 +1,24 @@
+---
+
+- hosts: fluentd-ingest
+  become: true
+
+  roles:
+    - nginx
+    - fluentd
+    - datadog
+
+- hosts: elasticsearch
+  become: true
+
+  roles:
+  #  - fluentd
+    - datadog
+    - elasticsearch
+
+- hosts: kibana
+  become: true
+
+  roles:
+    - kibana
+    - fluentd
