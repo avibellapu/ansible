@@ -1,0 +1,7 @@
+[fluentd-ingest]
+35.233.242.129
+
+[elasticsearch]
+35.233.184.156
+
+[kibana]
